@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  
+  <!--tag para contemplar responsividade do sistema-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!--link do css do bootstrap-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  
+  <!--link do jquery-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"    crossorigin="anonymous"></script>
+  
+  <!--link do ajax-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  
+  <!--link do javascript bootstrap-->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+  <!--icone da aba do navegador-->
+  <link rel="icon" type="imagex/png" href="https://cdn-icons-png.flaticon.com/512/12/12430.png">
+  <title>Engenharia de Software</title>
+</head>
+
+<body>
+
+  <div>
+    <p></p>
+  </div>
+  <!-- Criada uma div para apresentar as mensagens de inconsistências -->
+  <div role="alert" id="erro" style="text-align: center;">
+    <!--Cada paragrafo recebe um erro que vem da validação do javascript-->
+    <p id="erroEmail"></p>
+    <p id="erroNumero"></p>
+    <p id="erroData"></p>
+  </div>
+
+  <!-- Criada uma div para apresentar mensagens de sucesso -->
+  <div role="alert" id="sucesso" style="text-align: center;">
+    <p id="sucessoTexto"></p>
+  </div>
+
+  <div style="padding: 100px; border: solid; border-radius: 85px; border-width: 1px; margin-top: 95px;  margin-left: 125px; margin-right: 125px;">
+
+    <h1>
+      <center>Desenvolvimento e Validação de Formulários em JavaScript</center>
+    </h1><br>
+
+    <!-- Início do formulário -->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" placeholder="Nome">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" class="form-control" id="sobrenome" placeholder="Sobrenome">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="data">Data de Nascimento</label>
+        <input type="text" class="form-control" id="data" placeholder="dd/mm/aaaa">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="numero">Celular</label>
+        <input type="number" class="form-control" id="numero" placeholder="(99) 99999-9999">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="email">Email</label>
+        <input class="form-control" id="email" placeholder="Email">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="senha">Senha</label>
+        <input type="password" class="form-control" id="senha" placeholder="Senha">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="cidade">Cidade</label>
+        <input type="text" class="form-control" id="cidade" placeholder="Cidade">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputEstado">Estado</label>
+        <select id="inputEstado" class="form-control">
+          <option selected>Escolher...</option>
+          <!--Apenas alguns estados cadastrados para facilitar o desenvolvimento-->
+          <option>RS</option>
+          <option>SP</option>
+          <option>PR</option>
+          <option>SC</option>
+          <option>MG</option>
+          <option>RJ</option>
+        </select>
+      </div>
+    </div>
+
+    <!--Quando clicado no botão "Inscrever-se" a função de limpeza das classes do javascript é chamada-->
+    <!-- Após a limpeza das classes ser realizada, a própria função chama a função de validação -->
+    <center><button onclick="limpaClasse()" class="btn btn-primary">Inscrever-se</button></center>
+
+  </div>
+<!--Fim do formulário-->
+
+</body>
+
+<!--chamando o arquivo javascript com as validações-->
+<script src="script.js"></script>
+
+  <script>
+    // Função para aplicar a máscara de data em tempo real
+    function formatarData(input) {
+      // Remove todos os caracteres não numéricos da entrada
+      const campoLimpo = input.replace(/\D/g, '');
+      // Verifica o comprimento da entrada para aplicar a máscara
+
+      //se o tamanho digitado for menor ou igual a 2, limpa o campo
+      if (campoLimpo.length <= 2) {
+        return campoLimpo;
+      } else if (campoLimpo.length <= 4) {
+        //se forem digitados apenas 4 números ou menos
+
+        //verifica que os 2 primeitos campos são do dia
+        const dia = campoLimpo.slice(0, 2);
+
+        //verifica que os campos 3 e 4 são referentes ao mês
+        const mes = campoLimpo.slice(2);
+
+        //insere uma / entre os campos dia e mes
+        return `${dia}/${mes}`;
+      } else {
+
+        //se digitado todos os campos
+
+        //os dois primeiros são dia
+        const dia = campoLimpo.slice(0, 2);
+
+        //os dois campos após os 2 primeitos são mes
+        const mes = campoLimpo.slice(2, 4);
+
+        //os últimos campos são ano
+        const ano = campoLimpo.slice(4, 8);
+
+        //insere uma / entre o dia, mes e ano
+        return `${dia}/${mes}/${ano}`;
+      }
+    }
+
+    // Seleciona o campo de entrada
+    const campoData = document.getElementById('data');
+
+    // Adiciona um ouvinte de evento de entrada (input) ao campo de entrada
+    // isso pois a ideia era que ele ficasse ouvindo em tempo real o campo, pois queria que enquanto o usuario digitasse já fosse aplicando a mascara
+    campoData.addEventListener('input', function () {
+      // a constante valorAtual vai recebendo o valor digitado
+      const valorAtual = campoData.value;
+
+      // a constante valorFormatado vai recebendo os valores da function formatarData
+      const valorFormatado = formatarData(valorAtual);
+
+      //o campo do input vai recebendo o valor da constante valorFormatado que recebeu os dados da função
+      campoData.value = valorFormatado;
+    });
+
+  </script>
+</html>
